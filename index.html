@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download any url</title>
+    <style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+       body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+       }
+       .container input{
+        font-size: 22px;
+        border: 2px solid rgb(137, 209, 233);
+        border-radius: 26px;
+        outline: none;
+        padding: 7px 8px;
+       
+       }
+    .container button{
+        font-size: 22px;
+        border: 2px solid rgb(137, 209, 233);
+        border-radius: 26px;
+        background-color: black;
+        color: white;
+        outline: none;
+        padding: 7px 8px;
+        cursor: pointer;
+        text-align: center;
+       
+
+    }
+    button:hover{
+background-color: white;
+color: black;
+    }
+    .container button{
+        margin: 20px 118px;
+    }
+    body{
+        background-color:#ABF62D;
+    }
+    .container h2{
+margin: 16px 0;
+        text-align: center;
+    }
+    h4{
+        text-align: center;
+        font-weight: 700;
+    }
+    .container{
+        background-color:#BCFD4C;
+        border: 2px solid rgb(169, 225, 243);
+        max-width: max-content;
+        max-height: max-content;
+        border-radius: 8px;
+    }
+    input{
+margin-left: 50px;
+    }
+    
+
+  
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>File Downloader</h2>
+    
+        <h4>Paste url of image,video,or pdf to download.</h4>
+        <br>
+    
+
+<input type="url" id="input" placeholder="Please paste file url" required>
+<br>
+<button type="button" id="btn">Download file</button>
+
+    </div>
+    
+</body>
+
+<script>
+    
+const input=document.getElementById('input');
+const btn=document.getElementById('btn');
+
+btn.addEventListener('click',function(e){
+    e.preventDefault();
+    btn.innerText="Downloading file.."
+    fetchFile(input.value);
+});
+
+ function fetchFile(url){
+    fetch(url).then(res=> res.blob().then(file =>{
+        let tem=URL.createObjectURL(file);
+        let aTag=document.createElement("a");
+        aTag.href=tem;
+
+        aTag.download=url.replace(/^.*[\\\/]/,'');
+
+        document.body.appendChild(aTag);
+        aTag.click();
+        aTag.remove();
+URL.revokeObjectURL(tem);
+btn.innerText="Download File"
+
+    })).catch(()=>{
+        
+alert("Failed to download file");
+    });
+
+ }
+
+
+
+
+</script>
+</html>
